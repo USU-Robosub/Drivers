@@ -18,7 +18,6 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <stdio.h>
-#include <cstddef>
 
 class I2C
 {
@@ -31,7 +30,7 @@ class I2C
           * \return Returns the byte returned by the slave as an unsigned integer.
           */
         static uint8_t readByte(uint8_t device, uint8_t reg, uint8_t i2c=2);
-        
+
         // read from slave register of device
         /** \brief Reads two bytes from the slave device.
           * \param device The known address of the slave device.
@@ -59,7 +58,7 @@ class I2C
           * \param i2c I2C device to perform the operation on; default: 1
           */
         static void writeByte(uint8_t device, uint8_t reg, uint8_t value, uint8_t i2c=2);
-    
+
     private:
         /** \brief Helper function that returns a file descriptor to the i2c device.
          * 
