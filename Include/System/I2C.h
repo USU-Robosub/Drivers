@@ -18,6 +18,7 @@
 #include <unistd.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <cstddef>
 
 class I2C
 {
