@@ -17,6 +17,12 @@ MPU6050::~MPU6050() {}
 
 
 
+int WhoAmI() {
+    return static_cast<short>(I2C::readShort(MPU6050_ADDR_A, MPU6050_WHO_AM_I));
+}
+
+
+
 float MPU6050::accel_X() {
     return scaleAccel(I2C::readShort(MPU6050_ADDR_A, MPU6050_ACCEL_XOUT_H));
 }
@@ -75,14 +81,16 @@ float MPU6050::scaleAccel(short value) {
 
 void MPU6050::setGyroFullScale(FS_SEL select) {
     g_full = select;
-    I2C::writeByte(MPU6050_ADDR_A, MPU6050_GYRO_CONFIG, static_cast<int>(select) << 3);
+    I2C::writeByte(MPU6050_ADDR_A, MPU6050_GYRO_CONFIG,
+        static_cast<int>(select) << 3);
 }
 
 
 
 void MPU6050::setAcclFullScale(AFS_SEL select) {
     a_full = select;
-    I2C::writeByte(MPU6050_ADDR_A, MPU6050_ACCEL_CONFIG, static_cast<int>(select) << 3);
+    I2C::writeByte(MPU6050_ADDR_A, MPU6050_ACCEL_CONFIG,
+        static_cast<int>(select) << 3);
 }
 
 
