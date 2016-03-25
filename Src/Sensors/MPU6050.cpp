@@ -17,7 +17,7 @@ MPU6050::~MPU6050() {}
 
 
 
-int WhoAmI() {
+int MPU6050::WhoAmI() {
     return static_cast<short>(I2C::readShort(MPU6050_ADDR_A, MPU6050_WHO_AM_I));
 }
 

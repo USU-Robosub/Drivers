@@ -21,8 +21,7 @@
 #include <thread>
 #include <cmath>
 
-#define delay(time) std::this_thread::sleep_for(
-  std::chrono::milliseconds(time));
+#define delay(time) std::this_thread::sleep_for(std::chrono::milliseconds(time));
 
 class BMP085 : public IDriver
 {

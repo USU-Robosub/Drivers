@@ -18,7 +18,7 @@ BMP085::~BMP085() {}
 
 
 
-int WhoAmI() {
+int BMP085::WhoAmI() {
     return static_cast<short>(I2C::readShort(BMP085_ADDR, BMP085_DEVICE));
 }
 

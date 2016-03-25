@@ -17,7 +17,7 @@ HMC5883L::~HMC5883L() {}
 
 
 
-int WhoAmI() {
+int HMC5883L::WhoAmI() {
     return static_cast<short>(I2C::readShort(HMC5883L_ADDR, HMC5883L_ID_A));
 }
 
