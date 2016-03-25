@@ -17,6 +17,12 @@ HMC5883L::~HMC5883L() {}
 
 
 
+int HMC5883L::WhoAmI() {
+    return static_cast<short>(I2C::readShort(HMC5883L_ADDR, HMC5883L_ID_A));
+}
+
+
+
 float HMC5883L::X() {
     return scaleWithGain(I2C::readShort(HMC5883L_ADDR, HMC5883L_X_H));
 }

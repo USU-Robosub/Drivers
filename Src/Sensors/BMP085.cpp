@@ -18,10 +18,14 @@ BMP085::~BMP085() {}
 
 
 
+int BMP085::WhoAmI() {
+    return static_cast<short>(I2C::readShort(BMP085_ADDR, BMP085_DEVICE));
+}
+
+
+
 bool BMP085::initialize(uint8_t mode)
 {
-    //fprintf(stderr, "BMP085 Mode = %d\n", mode);
-
     if (mode > BMP085_ULTRAHIGHRES)
         mode = BMP085_ULTRAHIGHRES;
     oversampling = mode;
@@ -122,9 +126,9 @@ float BMP085::readAltitude(float sealevelPressure)
 
 
 
-/*********************************************************************/
-/*                         Private Functions                         */
-/*********************************************************************/
+/******************************************************************************/
+/*                              Private Functions                             */
+/******************************************************************************/
 
 
 

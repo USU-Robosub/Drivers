@@ -6,7 +6,8 @@
   *        Fork: https://github.com/adafruit/Adafruit-BMP085-Library
   *
   * \brief This is a hardware wrapper for the BMP085 pressure sensor.
-  *        It provides fundimental sensor readings and control in an orginized manner.
+  *        It provides fundimental sensor readings and control in  an  orginized
+  *        manner.
   */
 
 #ifndef BMP085_H_
@@ -14,22 +15,31 @@
 
 #include "I2C.h"
 #include "BMP085_Reg.h"
+#include "IDriver.h"
+
 #include <chrono>
 #include <thread>
 #include <cmath>
 
 #define delay(time) std::this_thread::sleep_for(std::chrono::milliseconds(time));
 
-class BMP085
+class BMP085 : public IDriver
 {
     public:
-        /** \brief Initializes a new pressure sensor for depth and altitude analysis.
+        /** \brief Initializes a new pressure  sensor  for  depth  and  altitude
+          *        analysis.
           * \param bus The address of the I2C bus the sensor listens on.
           */
         BMP085();
         virtual ~BMP085();
 
-        /** \brief Initializes the environment and establishes calibration constants used in future computations.
+        /** \brief Takes an ID reading from the sensor.
+         *  \return Returns the ID associated with the BMP085 device (0x55).
+         */
+        int WhoAmI();
+
+        /** \brief Initializes  the  environment  and  establishes   calibration
+          *        constants used in future computations.
           * \param mode The mode used to determine the accuracy of measurements.
           * \return Returns true if initialization was successful.
           */
@@ -46,7 +56,8 @@ class BMP085
         int32_t readPressure();
 
         /** \brief Makes a pressure reading calculated at sealevel.
-          * \param Optionally provide an altitude in meters describing the sensor's position.
+          * \param Optionally provide  an  altitude  in  meters  describing  the
+          *        sensor's position.
           * \return Returns a measurement in Pascals (Pa)
           */
         int32_t readSealevelPressure(float altitude_meters = 0);
@@ -54,7 +65,8 @@ class BMP085
         // read the approximate altitude in meters (m)
         // params: current provided sea level pressure
         /** \brief Makes a pressure reading and calculates the current altitude.
-          * \param sealevelPressure The measured sealevel pressure of the environment.
+          * \param sealevelPressure The  measured  sealevel  pressure   of   the
+          *        environment.
           * \return Returns the altitude in meters.
           */
         float readAltitude(float sealevelPressure = 101325);

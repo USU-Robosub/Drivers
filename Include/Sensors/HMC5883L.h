@@ -6,33 +6,42 @@
   *      Author: TekuConcept
   *
   * \brief This is a hardware wrapper for the HMC5883L compass sensor.
-  *        It provides fundimental sensor readings and control in an orginized manner.
+  *        It provides fundimental sensor readings and control in an
+  *        orginized manner.
   */
 
 #ifndef HMC5883L_H_
 #define HMC5883L_H_
 
 #include "HMC5883L_Reg.h"
+#include "IDriver.h"
 #include "I2C.h"
 #include <stdexcept>
 
 
-class HMC5883L
+class HMC5883L : public IDriver
 {
     public:
-        /** \brief Initializes a new compass sensor for direction based analysis.
+        /** \brief Initializes  a  new  compass  sensor  for   direction   based
+          *        analysis.
           * \param bus The address of the I2C bus the compass listens on.
           */
         HMC5883L();
         virtual ~HMC5883L();
+
+        /** \brief Takes an ID reading from the sensor.
+         *  \return Returns the ID associated with the HMC5883L device (0x48).
+         */
+        int WhoAmI();
         
         
         
-        /*********************************************************************/
-        /*                        Configuration Enums                        */
-        /*********************************************************************/
+        /**********************************************************************/
+        /*                        Configuration Enums                         */
+        /**********************************************************************/
         
-        /** \brief Used to select the number of samples averaged per measurement output.
+        /** \brief Used to select the number of samples averaged per measurement
+          *        output.
           */
         enum class Sample { // Samples averaged per measurement
             Sx1=0, ///< 1 sample per measurement (default)
@@ -41,8 +50,9 @@ class HMC5883L
             Sx8  ///< 8 samples per measurement
         };
 
-        /** \brief The Table below shows all selectable output rates in continuous measurement mode.
-        *          All three channels shall be measured within a given output rate.
+        /** \brief The  Table  below  shows  all  selectable  output  rates   in
+          *        continuous measurement mode.  All  three  channels  shall  be
+          *        measured within a given output rate.
           */
         enum class Rate { // Data Output Rate in Hertz
             Hz_75=0, ///< 0.75 Hz
@@ -54,8 +64,9 @@ class HMC5883L
             Hz75   ///< 75.00 Hz
         };
 
-        /** \brief Choose a lower gain value (higher GN#) when total field strength causes overflow
-          *        in one of the data output registers (saturation). Output Range: -2048 - 2047
+        /** \brief Choose a lower  gain  value  (higher GN#)  when  total  field
+          *        strength causes overflow in one of the data output  registers
+          *        (saturation). Output Range: -2048 - 2047
           */
         enum class Gain { // Gain configuration in Gauss
             G_88=0, ///< ± 0.88 Ga
@@ -96,9 +107,9 @@ class HMC5883L
             Idle,
         };
         
-        /*********************************************************************/
-        /*                          Sensor Values                            */
-        /*********************************************************************/
+        /**********************************************************************/
+        /*                          Sensor Values                             */
+        /**********************************************************************/
 
         // sensor measurements
         /** \brief Reads the X-direction of the greatest polar field.
@@ -118,9 +129,9 @@ class HMC5883L
 
 
 
-        /*********************************************************************/
-        /*                          Configuration                            */
-        /*********************************************************************/
+        /**********************************************************************/
+        /*                          Configuration                             */
+        /**********************************************************************/
 
         /** \brief Sets the number of samples to be taken per measurement.
           * \param ma The provided sample rate value. Default = Sample.Sx1
@@ -132,52 +143,61 @@ class HMC5883L
           */
         void setOutputRate(Rate dor);
 
-        /** \brief Sets the gain in Gauss applied to measurement samples.
-          *        Note that the very first measurement after a gain change maintains the same gain as the previous setting.
-          *        The new gain setting is effective from the second measurement and on.
+        /** \brief Sets the  gain  in  Gauss  applied  to  measurement  samples.
+          *        Note that the very first  measurement  after  a  gain  change
+          *        maintains the same gain as the previous setting. The new gain
+          *        setting is effective from  the  second  measurement  and  on.
           * \param gn The provided gain value. Default = Gain.G1_3
           */
         void setGain(Gain gn);
 
-        /** \brief Sets the current operating mode. See the table for Mode for more information about the types of modes.
+        /** \brief Sets the current operating mode. See the table for  Mode  for
+          *        more information about the types of modes.
           * \param md The provided operating mode value. Default = Mode.Single
           */
         void setMode(Mode md);
 
 
 
-        /*********************************************************************/
-        /*                             Accessors                             */
-        /*********************************************************************/
+        /**********************************************************************/
+        /*                             Accessors                              */
+        /**********************************************************************/
         
         // OO configuration access
         /** \brief Returns the last value set for the sample average.
-          *        This is not always the same value read from the hardware's register.
+          *        This is not always the same value read  from  the  hardware's
+          *        register.
           */
         int getSampleAverage();
 
         /** \brief Returns the last value set for the output rate.
-          *        This is not always the same value read from the hardware's register.
+          *        This is not always the same value read  from  the  hardware's
+          *        register.
           */
         int getOutputRate();
 
         /** \brief Returns the last value set for the gain.
-          *        This is not always the same value read from the hardware's register.
+          *        This is not always the same value read  from  the  hardware's
+          *        register.
           */
         int getGain();
 
         /** \brief Returns the last value set for the mode.
-          *        This is not always the same value read from the hardware's register.
+          *        This is not always the same value read  from  the  hardware's
+          *        register.
           */
         int getMode();
 
-        /** \brief This flag indicates wether the data output register is currently locked.
+        /** \brief This flag  indicates  wether  the  data  output  register  is
+          *        currently locked.
+          *
           *        Reads from tri-axis data are still permitted.
           *        This flag is set when either:
-          *        - Some but not all of the tri-axis data output registers have been read,
-          *        - Mode register has been read. When this flag is set, the tri-axis data is
-          *          locked and any new data will not be placed in these registers until one of
-          *          these conditions are met:
+          *        - Some but not all of the tri-axis data output registers have
+          *          been read.
+          *        - Mode register has been read. When this  flag  is  set,  the
+          *          tri-axis data is locked and any new data will not be placed
+          *          in these registers until one of these conditions  are  met:
           *          + All tri-axis data has been read,
           *          + The mode is changed,
           *          + The measurement configuration is changed,
@@ -187,10 +207,11 @@ class HMC5883L
 
         // this flag indicates that there is data ready to be read
         /** \brief This flag indicates tri-axis data is ready to be read.
-          *        This flag is set when data is written to all 3 axis registers. It is cleared
-          *        when the device initiates a write to the data output registers and after one
-          *        or more of the data output registers are written to. When the ready flag is
-          *        false, it shall remain flase for approximately 250 μs.
+          *        This flag  is  set  when  data  is  written  to  all  3  axis
+          *        registers. It is cleared when the device initiates a write to
+          *        the data output registers and after one or more of  the  data
+          *        output registers are written  to.  When  the  ready  flag  is
+          *        false,  it  shall  remain  flase  for  approximately  250 μs.
           */
         bool isReady();
 
@@ -199,9 +220,10 @@ class HMC5883L
         Gain currentGain;
         const int GAIN_SCALER[8] = {1370, 1090, 820, 660, 440, 390, 330, 230};
 
-        /** \brief Scales the raw data (LSb) with the current Guass scalar (LSb / Guass)
-         *  \param value Raw data that needs to be scaled
-         */
+        /** \brief Scales the raw data  (LSb)  with  the  current  Guass  scalar
+          *        (LSb / Guass)
+          * \param value Raw data that needs to be scaled
+          */
         float scaleWithGain(short value);
 };
 

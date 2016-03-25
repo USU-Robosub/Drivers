@@ -6,7 +6,8 @@
   *      Author: TekuConcept
   *
   * \brief This is a hardware wrapper for the MPU6050 Accelerometer sensor.
-  *        It provides fundimental sensor readings and control in an orginized manner.
+  *        It provides fundimental sensor readings and control in  an  orginized
+  *        manner.
   */
 
 #ifndef MPU6050_H_
@@ -14,46 +15,55 @@
 
 #include "I2C.h"
 #include "MPU6050_Reg.h"
+#include "IDriver.h"
 #include <stdexcept>
 
-class MPU6050
+class MPU6050 : public IDriver
 {
     public:
-        /** \brief Initializes a new accelerometer sensor for motion-based analysis
+        /** \brief Initializes  a  new  accelerometer  sensor  for  motion-based
+          *        analysis
           * \param bus The address of the I2C bus the accelerometer listens on.
           */
         MPU6050();
         virtual ~MPU6050();
+
+        /** \brief Takes an ID reading from the sensor.
+         *  \return Returns the ID associated with the MPU6050 device (0x68).
+         */
+        int WhoAmI();
         
         
     
-        /*********************************************************************/
-        /*                        Configuration Enums                        */
-        /*********************************************************************/
+        /**********************************************************************/
+        /*                        Configuration Enums                         */
+        /**********************************************************************/
         
-        /// FS_SEL selects the full scale range of the gyroscope outputs according to the following table.
+        /// FS_SEL selects  the  full  scale  range  of  the  gyroscope  outputs
+        /// according to the following table.
         enum class FS_SEL
         { // ± °/s
             FSG_250 = 0, ///< ± 250 °/s
-            FSG_500, ///< ± 500 °/s
-            FSG_1K, ///< ± 1000 °/s
-            FSG_2K ///< ± 2000 °/s
+            FSG_500,     ///< ± 500 °/s
+            FSG_1K,      ///< ± 1000 °/s
+            FSG_2K       ///< ± 2000 °/s
         };
 
-        /// AFS_SEL selects the full scale range of the accelerometer outputs according to the following table.
+        /// AFS_SEL selects the full scale range of  the  accelerometer  outputs
+        /// according to the following table.
         enum class AFS_SEL
         { // ± g
-            FSA_2 = 0, ///< ± 2g
-            FSA_4, ///< ± 4g
-            FSA_8, ///< ± 8g
-            FSA_16 ///< ± 16g
+            FSA_2 = 0,   ///< ± 2g
+            FSA_4,       ///< ± 4g
+            FSA_8,       ///< ± 8g
+            FSA_16       ///< ± 16g
         };
         
         
         
-        /*********************************************************************/
-        /*                          Sensor Values                            */
-        /*********************************************************************/
+        /**********************************************************************/
+        /*                           Sensor Values                            */
+        /**********************************************************************/
 
         // returns the XYZ magnitude from accelerometer
         /** \brief Makes a reading from the accelerometer's X axis.
@@ -95,19 +105,21 @@ class MPU6050
 
 
 
-        /*********************************************************************/
-        /*                          Configuration                            */
-        /*********************************************************************/
+        /**********************************************************************/
+        /*                           Configuration                            */
+        /**********************************************************************/
 
         // FS_SEL selects the full scale range of the gyroscope outputs
         /** \brief Sets the full scale range of the gyroscope.
-          * \param select Selects the full scale range of the gyroscope outputs according to the definitions of the FS_SEL enum.
+          * \param select Selects the full scale range of the gyroscope  outputs
+          *        according to the definitions of the FS_SEL enum.
           */
         void setGyroFullScale(FS_SEL select);
 
         // AFS_SEL selects the full scale range of the accelerometer outputs
         /** \brief Sets the full scale range of the accelerometer.
-          * \param select Selects the full scale range of the accelerometer outputs according to the definitions of the AFS_SEL enum.
+          * \param select Selects the full  scale  range  of  the  accelerometer
+          *        outputs according to the definitions of the AFS_SEL enum.
           */
         void setAcclFullScale(AFS_SEL select);
 
