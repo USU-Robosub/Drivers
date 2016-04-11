@@ -9,6 +9,7 @@ int main() {
 	std::cout << "Initialization finished!\n";
 	std::cout << "Collecting Data...\n";
 	for(int i; i < 100; i++) {
+		while(!sensor.isReady()) {}
 		std::cout << "X: ";
 		std::cout << sensor.X();
 		std::cout << " Y: ";
