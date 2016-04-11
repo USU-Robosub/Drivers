@@ -4,7 +4,7 @@
 int main() {
 	std::cout << "Begin test!\n";
 	std::cout << "Initializing...\n";
-	HMC5883L sensor;
+	MPU6050 sensor;
 	sensor.awake();
 	std::cout << "Initialization finished!\n";
 	std::cout << "Collecting Data...\n";
