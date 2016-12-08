@@ -8,8 +8,8 @@
   *			and continuity.
   */
 
-#ifndef I_DRIVER_H
-#define I_DRIVER_H
+#ifndef IDRIVER_H
+#define IDRIVER_H
 
 class IDriver {
 public:
