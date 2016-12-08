@@ -55,7 +55,13 @@ namespace Drivers {
         void setFlowControl(FlowControl config);
         void setDataOutputFormat(DataOutputFormat format);
         
+        
+        /* ------------------------------------------------------- *\
+        |                      OTHER FUNCTIONS                      |
+        \* ------------------------------------------------------- */
+        
         void setLogger(std::shared_ptr<ILogger> logger);
+        int WhoAmI();
         
     private:
         std::shared_ptr<ISerial> _dvl_;

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <memory>
 #include <sstream>
+#include <unistd.h> // F_OK
 
 #include "ISerial.h"
 

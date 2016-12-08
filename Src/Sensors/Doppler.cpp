@@ -32,7 +32,6 @@ void Drivers::Doppler::_initVars() {
 
 void Drivers::Doppler::_readBinaryEnsemble(std::string& ensemble, int& length) {
     char buffer[4];
-    int bufferSize = 64;
     int count = 4;
     
     // read echo "CS"

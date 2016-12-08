@@ -58,4 +58,4 @@ int Drivers::DopplerSerial::writeData(char* buffer, int length) {
     return length;
 }
 
-void Drivers::DopplerSerial::writeData(std::string buffer) { /* not used */ }
+void Drivers::DopplerSerial::writeData(std::string buffer) { (void)buffer; }
