@@ -1,6 +1,6 @@
 #include "DopplerSerial.h"
 
-#define BAUD 9600;
+#define BAUD 9600
 using namespace Drivers;
 
 Drivers::DopplerSerial::DopplerSerial(std::string deviceName) {
