@@ -15,7 +15,7 @@ Drivers::Doppler::Doppler(std::shared_ptr<ISerial> serial) {
 }
 
 int Drivers::Doppler::WhoAmI() {
-    return 0x95B602700;
+    return 0x95B6027; // P/N 95B-6027-00
 }
 
 void Drivers::Doppler::_initVars() {
