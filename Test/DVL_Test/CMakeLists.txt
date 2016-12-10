@@ -7,12 +7,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -Wextra -pedant
 # Includes
 include_directories(../../Include/Interfaces)
 include_directories(../../Include/Registers)
-include_directories(../../Include/Sensors) 
+include_directories(../../Include/Sensors)
 include_directories(../../Include/System)
 
 # Created Executable Object
 #add_library(drivers SHARED IMPORTED)
 
 link_directories(../../Build)
-add_executable(run test_basic_doppler.cpp)
-target_link_libraries(run Drivers)
+add_executable(run_basic test_basic_doppler.cpp)
+add_executable(run_com test_doppler_commands.cpp)
+
+target_link_libraries(run_basic Drivers)
+target_link_libraries(run_com Drivers)

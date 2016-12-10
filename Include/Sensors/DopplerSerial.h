@@ -12,13 +12,13 @@
 namespace Drivers {
     class DopplerSerial : public ISerial {
     public:
-        DopplerSerial(std::string deviceName);
+        DopplerSerial(std::string deviceName, int baud);
         ~DopplerSerial();
         int readData(char* buffer, int length);
         void readData(std::string& buffer);
         int writeData(char* buffer, int length);
         void writeData(std::string buffer);
-    
+
     private:
         std::shared_ptr<std::ifstream> _input_;
         std::shared_ptr<std::ofstream> _output_;
