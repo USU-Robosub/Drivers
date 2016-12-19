@@ -1,5 +1,4 @@
 #include "Doppler.h"
-#include <iomanip>
 
 #define BAUD 9600
 #define LOG(x, y) if(_log_ != nullptr) \
@@ -117,12 +116,16 @@ void Drivers::Doppler::sendPingStart(std::string& ensemble) {
 
 void Drivers::Doppler::sendPingStart(std::string& ensemble, int& length) {
     _dvl_->writeData((char*)"CS\r", 3);
-    if(_fc_.binaryDataOutput) {
+    if(_fc_.binaryDataOutput && (_dof_ != DataOutputFormat::PD6)) {
         _readBinaryEnsemble(ensemble, length);
     }
     else {
         _dvl_->readData(ensemble);
-        length = ensemble.length();
+
+        int len = ensemble.length();
+        int start = (_dof_==PD0)?4:2;            // PD0 starts with 2 extra chars
+        length = len - start - (_dof_!=PD6?3:5); // ignore CS\r and \r\n>
+        ensemble = ensemble.substr(start, length);
     }
     LOG(ensemble, "Doppler.sendPingStart(string)");
 }
@@ -466,4 +469,12 @@ void Drivers::Doppler::readString(std::string& data) {
     std::string buffer;
     _dvl_->readData(buffer);
     data = buffer;
+}
+
+Drivers::Doppler::DataOutputFormat Drivers::Doppler::getOutputFormat() {
+    return _dof_;
+}
+
+bool Drivers::Doppler::isBinaryOutput() {
+    return _fc_.binaryDataOutput;
 }

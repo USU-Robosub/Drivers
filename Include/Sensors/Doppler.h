@@ -4,6 +4,7 @@
 #include "DopplerSerial.h"
 #include "IDriver.h"
 #include "ILogger.h"
+#include <iomanip>
 
 namespace Drivers {
     class Doppler : public IDriver {
@@ -41,7 +42,7 @@ namespace Drivers {
         enum MassMode { M_OFF, M_WB, M_LOSTB, M_W };    // default: M_OFF
         enum ResetType { USER, FACTORY };
         enum TurnkeyState { T_OFF, T_ON };              // default: T_ON
-        enum DataOutputFormat { PD0, PD4, PD5, PD6 };   // default: PD0
+        enum DataOutputFormat { PD0, PD4=4, PD5, PD6 }; // default: PD0
 
         // Coordinate Transformation
         enum TransformType { NONE, INSTRUMENT, SHIP, EARTH};
@@ -106,6 +107,9 @@ namespace Drivers {
 
         void setLogger(std::shared_ptr<ILogger> logger);
         int WhoAmI();
+
+        DataOutputFormat getOutputFormat();
+        bool isBinaryOutput();
 
 
     private:
