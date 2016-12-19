@@ -230,7 +230,6 @@ PTR(Drivers::DataStream0) Drivers::DopplerData::composeDataStream0(
     PTR(DataStream0) result = std::make_shared<DataStream0>();
     result->raw = data;
     int idx = 0, jdx = 0, length = data.length();
-    short tag;
 
     // parse header
     result->headerId  = uChar (data, idx);
@@ -394,7 +393,6 @@ PTR(Drivers::DataStream4) Drivers::DopplerData::composeDataStream4(
 
 PTR(Drivers::DataStream5) Drivers::DopplerData::composeDataStream5(
     std::string data) {
-    const char* ds = data.c_str();
     int idx = 45, length = data.length();
 
     if(length < 88) { // DataStream5 is exactly 88 bytes in length
