@@ -24,25 +24,25 @@ int HMC5883L::WhoAmI() {
 
 
 float HMC5883L::X() {
-    return scaleWithGain(I2C::readShort(HMC5883L_ADDR, HMC5883L_X_H));
+    return scaleWithGain((short)I2C::readShort(HMC5883L_ADDR, HMC5883L_X_H));
 }
 
 
 
 float HMC5883L::Y() {
-    return scaleWithGain(I2C::readShort(HMC5883L_ADDR, HMC5883L_Y_H));
+    return scaleWithGain((short)I2C::readShort(HMC5883L_ADDR, HMC5883L_Y_H));
 }
 
 
 
 float HMC5883L::Z() {
-    return scaleWithGain(I2C::readShort(HMC5883L_ADDR, HMC5883L_Z_H));
+    return scaleWithGain((short)I2C::readShort(HMC5883L_ADDR, HMC5883L_Z_H));
 }
 
 
 
 float HMC5883L::scaleWithGain(short value) {
-    return value * (1.0 / GAIN_SCALER[static_cast<int>(currentGain)]);
+    return (float)(value * GAIN_SCALER[static_cast<int>(currentGain)]);
 }
 
 

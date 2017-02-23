@@ -1,4 +1,7 @@
 #include <iostream>
+#include <iomanip>
+#include <chrono>
+#include <thread>
 #include "MPU6050.h"
 
 int main() {
@@ -8,6 +11,7 @@ int main() {
 	sensor.awake();
 	std::cout << "Initialization finished!\n";
 	std::cout << "Collecting Data...\n";
+	std::cout << std::setprecision(2) << std::fixed;
 	for(int i; i < 100; i++) {
 		std::cout << "Accel[X: ";
 		std::cout << sensor.accel_X();

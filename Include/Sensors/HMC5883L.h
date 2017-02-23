@@ -218,7 +218,8 @@ class HMC5883L : public IDriver
     private:
         // LSb / Gauss
         Gain currentGain;
-        const int GAIN_SCALER[8] = {1370, 1090, 820, 660, 440, 390, 330, 230};
+        //const int GAIN_SCALER[8] = {1370, 1090, 820, 660, 440, 390, 330, 230};
+        const float GAIN_SCALER[8] = { 0.73, 0.92, 1.22, 1.52, 2.27, 2.56, 3.03, 4.35 };
 
         /** \brief Scales the raw data  (LSb)  with  the  current  Guass  scalar
           *        (LSb / Guass)

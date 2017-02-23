@@ -24,37 +24,37 @@ int MPU6050::WhoAmI() {
 
 
 float MPU6050::accel_X() {
-    return scaleAccel(I2C::readShort(MPU6050_ADDR_A, MPU6050_ACCEL_XOUT_H));
+    return scaleAccel((float)I2C::readShort(MPU6050_ADDR_A, MPU6050_ACCEL_XOUT_H));
 }
 
 
 
 float MPU6050::accel_Y() {
-    return scaleAccel(I2C::readShort(MPU6050_ADDR_A, MPU6050_ACCEL_YOUT_H));
+    return scaleAccel((float)I2C::readShort(MPU6050_ADDR_A, MPU6050_ACCEL_YOUT_H));
 }
 
 
 
 float MPU6050::accel_Z() {
-    return scaleAccel(I2C::readShort(MPU6050_ADDR_A, MPU6050_ACCEL_ZOUT_H));
+    return scaleAccel((float)I2C::readShort(MPU6050_ADDR_A, MPU6050_ACCEL_ZOUT_H));
 }
 
 
 
 float MPU6050::gyro_X(){
-    return scaleGyro(I2C::readShort(MPU6050_ADDR_A, MPU6050_GYRO_XOUT_H));
+    return scaleGyro((float)I2C::readShort(MPU6050_ADDR_A, MPU6050_GYRO_XOUT_H));
 }
 
 
 
 float MPU6050::gyro_Y() {
-    return scaleGyro(I2C::readShort(MPU6050_ADDR_A, MPU6050_GYRO_YOUT_H));
+    return scaleGyro((float)I2C::readShort(MPU6050_ADDR_A, MPU6050_GYRO_YOUT_H));
 }
 
 
 
 float MPU6050::gyro_Z() {
-    return scaleGyro(I2C::readShort(MPU6050_ADDR_A, MPU6050_GYRO_ZOUT_H));
+    return scaleGyro((float)I2C::readShort(MPU6050_ADDR_A, MPU6050_GYRO_ZOUT_H));
 }
 
 
@@ -68,13 +68,13 @@ float MPU6050::temperature() {
 
 
 float MPU6050::scaleGyro(short value){
-    return value * (1.0 / GYRO_SCALER[static_cast<int>(g_full)]);
+    return value / GYRO_SCALER[static_cast<int>(g_full)];
 }
 
 
 
 float MPU6050::scaleAccel(short value) {
-    return value * (1.0 / ACCEL_SCALER[static_cast<int>(a_full)]);
+    return value / (float)ACCEL_SCALER[static_cast<int>(a_full)];
 }
 
 
